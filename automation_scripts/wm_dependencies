@@ -33,7 +33,7 @@ if ! [[ -d $CONFIG_HOME ]]; then
 fi
 
 
-files=(".bashrc" ".bash_profile" ".bash_logout" )
+files=(".bashrc" ".bash_profile" ".bash_logout" ".Xresources")
 directories=("alacritty" "bspwm" "dunst" "picom" "polybar" "rofi" "sxhkd")
 
 
