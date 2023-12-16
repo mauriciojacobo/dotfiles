@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Create symlinks for configuration files that exist on the home directory
+symlink() {
+	if [ -e ~/$1 ]; then
+		echo "Found existing file, created backup: ~/${1}.bak"
+		mv ~/$1 ~/$1.bak
+	fi
+	ln -sf ~/.dotfiles/$1 ~/$1;
+}
+
+
+# List of configuraion files
+config_files=(
+	".bash_history" 
+	".bash_logout" 
+	".bash_profile" 
+	".bashrc" 
+	".fehbg"
+)
+
+
+for e in "${config_files[@]}"; do
+	#symlink $e
+	echo "a"
+done
+
+
+# Create Symlink for applications configuration files that needs its own directory
+
+XDG_CONFIG_HOME="$HOME/.config/"
+
+declare -A conf_path
+
+conf_path["alacritty"]="alacritty.yml"
+conf_path["picom"]="picom.conf"
+conf_path["sxhkd"]="sxhkdrc"
+conf_path["bspwm"]="bspwmrc"
+conf_path["polybar"]="config.ini"
+
+for key in "${!conf_path[@]}"; do
+ 	cp $XDG_CONFIG_HOME$key/${conf_path[$key]} ~/.dotfiles/$key/${conf_path[$key]}
+
+	ln -sf ~/.dotfiles/$key/${conf_path[$key]} $XDG_CONFIG_HOME$key/${conf_path[$key]}
+done
+

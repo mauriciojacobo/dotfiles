@@ -1,0 +1,31 @@
+#!/bin/sh
+
+main_display=$(xrandr | grep -w 'connected' | head -n1 | cut -d ' ' -f1)
+current_bright=$(xrandr --verbose | grep -w "Brightness" | cut -d ' ' -f2)
+
+send_notification() {
+	brightness=$(echo "$1 * 100" | bc)
+	dunstify -a "changebrightness" -u low -r 9993 -h int:value:"$brightness" -i "brightness" "Brightness" "Currently at  $brightness%" -t 2000
+}
+
+
+modify_brightness() {
+	new_bright=$(echo $current_bright $1 0.1 | bc)
+	xrandr --output $main_display --brightness $new_bright
+	send_notification $new_bright
+}
+
+case $1 in
+	up)
+		if [[ "$current_bright" != "1.0" ]]; then
+			modify_brightness "+"
+		fi
+		;;
+	down)
+		if [[ "$current_bright" != "0.20" ]]; then
+			modify_brightness "-"
+		fi
+		;;
+esac
+
+

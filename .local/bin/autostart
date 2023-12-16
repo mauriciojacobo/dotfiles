@@ -1,0 +1,28 @@
+#! /bin/sh
+
+# Applications to start on session start
+# Intended to be called from bspwmrc or similar wm startup script
+
+# keybindings daemon
+sxhkd &
+
+# window compositor
+picom --daemon --config $HOME/.dotfiles/picom/picom.conf > /tmp/picom_launch.log 2>&1 &
+
+# notification daemon
+dunst &
+
+# launch polybar
+$HOME/.dotfiles/polybar/launch.sh > /tmp/polybar_launch.log 2>&1 &
+
+
+# feh background
+feh --bg-fill $HOME/Descargas/16.jpg &
+
+
+# set screen powersaving mode
+#xset dpms 480 720 1800
+
+# Just to make sure Master control is available for amixer
+amixer -q sget Master
+

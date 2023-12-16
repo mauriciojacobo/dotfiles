@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Increment, decrement, or mute the volumne and send a notification
+# of the current volumne level
+
+send_notification(){
+	volume=$(amixer  get Master | grep -oP '\d+%' | head -n1 | cut -d'%' -f1)
+	dunstify -a "changevolume" -u low -r 9993 -h int:value:"$volume" -i "volume" "Volume" "Currently at ${volume}%" -t 1000
+}
+
+case $1 in
+up)
+	# Set the volume on (if it was muted)
+	amixer -q sset Master unmute
+	amixer -q set Master 5%+
+	send_notification "$1"
+	;;
+down)
+	
+	amixer -q sset Master unmute
+	amixer -q set Master 5%-
+	send_notification "$1"
+	;;
+mute)
+	
+	amixer -q sset Master toggle
+	state=$(amixer sget Master mute| awk -F'[][]' '/%/ {print $4}' | head -n1 )
+	echo $state
+
+	if [[ "$state" == "off" ]]; then
+		dunstify -a "changevolume" -t 1000 -r 9993 -u low -i "volume-mute" "Volume" "Currently muted"
+	else
+		send_notification up
+	fi
+	;;
+esac
+		
+
+
