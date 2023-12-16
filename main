@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+# This script must be run after manually "sudo dnf update -y" 
+
+autom_scripts=$HOME/.dotfiles/automation_scripts
+
+$automation_scripts/fedora_conf
+
+# install_dependencies(){
+
+# }

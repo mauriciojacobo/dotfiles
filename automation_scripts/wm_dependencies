@@ -1,0 +1,52 @@
+#!/bin/bash
+
+XDG_CONFIG_HOME=$HOME/.config
+DF=$HOME/.dotfiles
+DF_LOCAL_BIN=$HOME/.dotfiles/.local/bin
+
+
+create_symlink(){
+	
+	if [[ -f $2/$1 ]]; then
+		echo "Found existing file $2/$1 creating backup on $2/$1.bak"
+		mv $2/$1  $2/$1.bak
+	fi
+	
+	ln -sf $HOME/.dotfiles/$1 $2/$1
+}
+
+
+:'sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
+
+if [[ $? -ne 0 ]]; then
+    echo "Error installing dependencies. Exiting."
+    exit 1
+fi
+
+
+if ! [[ -d $XDG_CONFIG_HOME ]]; then
+	mkdir $XDG_CONFIG_HOME
+fi
+
+'
+
+files=("bashrc" ".bash_profile" ".bash_logout" )
+directories=("alacritty" "bspwm" "dunst" "picom" "polybar" "rofi" "sxhkd")
+
+
+# Create links for configuration directories like:
+# ~/.config/{dependency} -> ~/.dotfiles/{dependency}/
+
+for d in "${directories[@]}"; do
+	create_symlink $d $XDG_CONFING_HOME
+done
+
+
+# Create links for configuration files
+for f in "${files[@]}"; do
+	create_symlink $f $DF 
+done
+
+
+
+export PATH=$PATH:"$DF_LOCAL_BIN"

@@ -1,0 +1,20 @@
+#!/usr/bin/sh
+
+if [[ $(xrandr -q | grep "HDMI-A-0 connected" ) ]]; then
+	xrandr --output eDP --primary --mode 2880x1800 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --right-of eDP
+fi
+
+$HOME/.local/bin/autostart
+
+bspc monitor eDP 	-d 	1 2 3 4 5 6
+bspc monitor HDMI-A-0 	-d 	7 8 9
+
+bspc config window_gap 			20
+bspc config border_width 		2
+bspc config normal_border_color 	"#313244"
+bspc config focused_border_color 	"#7f849c"
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
