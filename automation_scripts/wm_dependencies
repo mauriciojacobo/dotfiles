@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XDG_CONFIG_HOME=$HOME/.config
+CONFIG_HOME=$HOME/.config
 DF=$HOME/.dotfiles
 DF_LOCAL_BIN=$HOME/.dotfiles/.local/bin
 
@@ -12,25 +12,28 @@ create_symlink(){
 		mv $2/$1  $2/$1.bak
 	fi
 	
-	ln -sf $HOME/.dotfiles/$1 $2/$1
+	echo "Con el siguiente comando"
+	echo "ln -sf $HOME/.dotfiles/$1 $2/$1"
+
+	sudo ln -sf $HOME/.dotfiles/$1 $2/$1
 }
 
 
-:'sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
 
-if [[ $? -ne 0 ]]; then
-    echo "Error installing dependencies. Exiting."
-    exit 1
-fi
+#sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
+
+#if [[ $? -ne 0 ]]; then
+#    echo "Error installing dependencies. Exiting."
+#    exit 1
+#fi
 
 
-if ! [[ -d $XDG_CONFIG_HOME ]]; then
-	mkdir $XDG_CONFIG_HOME
-fi
+#if ! [[ -d $XDG_CONFIG_HOME ]]; then
+#	mkdir $CONFIG_HOME
+#fi
 
-'
 
-files=("bashrc" ".bash_profile" ".bash_logout" )
+files=(".bashrc" ".bash_profile" ".bash_logout" )
 directories=("alacritty" "bspwm" "dunst" "picom" "polybar" "rofi" "sxhkd")
 
 
@@ -38,15 +41,16 @@ directories=("alacritty" "bspwm" "dunst" "picom" "polybar" "rofi" "sxhkd")
 # ~/.config/{dependency} -> ~/.dotfiles/{dependency}/
 
 for d in "${directories[@]}"; do
-	create_symlink $d $XDG_CONFING_HOME
+	echo "creando symlink para $d"
+	create_symlink $d $CONFIG_HOME
 done
 
 
-# Create links for configuration files
-for f in "${files[@]}"; do
-	create_symlink $f $DF 
-done
+#Create links for configuration files
+#for f in "${files[@]}"; do
+#	create_symlink $f $HOME
+#done
 
 
 
-export PATH=$PATH:"$DF_LOCAL_BIN"
+#export PATH=$PATH:"$DF_LOCAL_BIN"
