@@ -20,17 +20,17 @@ create_symlink(){
 
 
 
-#sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
+sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
 
-#if [[ $? -ne 0 ]]; then
-#    echo "Error installing dependencies. Exiting."
-#    exit 1
-#fi
+if [[ $? -ne 0 ]]; then
+    echo "Error installing dependencies. Exiting."
+    exit 1
+fi
 
 
-#if ! [[ -d $XDG_CONFIG_HOME ]]; then
-#	mkdir $CONFIG_HOME
-#fi
+if ! [[ -d $CONFIG_HOME ]]; then
+	mkdir $CONFIG_HOME
+fi
 
 
 files=(".bashrc" ".bash_profile" ".bash_logout" )
@@ -41,16 +41,17 @@ directories=("alacritty" "bspwm" "dunst" "picom" "polybar" "rofi" "sxhkd")
 # ~/.config/{dependency} -> ~/.dotfiles/{dependency}/
 
 for d in "${directories[@]}"; do
-	echo "creando symlink para $d"
+	echo "creando symlink para la carpeta $d"
 	create_symlink $d $CONFIG_HOME
 done
 
 
 #Create links for configuration files
-#for f in "${files[@]}"; do
-#	create_symlink $f $HOME
-#done
+for f in "${files[@]}"; do
+	echo "creando symlink para el archivo $f"
+	create_symlink $f $HOME
+done
 
 
 
-#export PATH=$PATH:"$DF_LOCAL_BIN"
+export PATH=$PATH:"$DF_LOCAL_BIN"
