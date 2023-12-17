@@ -6,6 +6,7 @@ configuration {
   // fc-list : family style | grep "JetBrains"
   //  font: "JetBrains Mono Medium Italic 22";
   font : "JetBrainsMono NFP Bold 20";
+
   
   modi: "window,run,drun";
   

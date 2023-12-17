@@ -17,7 +17,7 @@ $HOME/.dotfiles/polybar/launch.sh > /tmp/polybar_launch.log 2>&1 &
 
 
 # feh background
-feh --bg-fill $HOME/Descargas/16.jpg &
+feh --bg-fill $HOME/Imágenes/wp_1.jpg &
 
 
 # set screen powersaving mode
