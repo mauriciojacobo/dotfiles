@@ -20,7 +20,7 @@ create_symlink(){
 
 
 
-sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty
+sudo dnf install -y bspwm sxhkd polybar picom rofi dunst feh alacritty xrandr vim
 
 if [[ $? -ne 0 ]]; then
     echo "Error installing dependencies. Exiting."

@@ -2,12 +2,12 @@
 
 if [[ $(xrandr -q | grep "HDMI-A-0 connected" ) ]]; then
 	xrandr --output eDP --primary --mode 2880x1800 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --right-of eDP
+	bspc monitor HDMI-A-0 	-d 	7 8 9
 fi
 
-$HOME/.local/bin/autostart
+$HOME/.dotfiles/.local/bin/autostart
 
 bspc monitor eDP 	-d 	1 2 3 4 5 6
-bspc monitor HDMI-A-0 	-d 	7 8 9
 
 bspc config window_gap 			20
 bspc config border_width 		2

@@ -5,17 +5,20 @@
 # Set time to locale, important for dual boot machines
 timedatectl set-local-rtc 1 --adjust-system-clock
 
-# A little better dnf 
-if [[ -f /etc/dnf/dnf.conf ]]; then
 
-	cat << EOF >> /etc/dnf/dnf.conf 
-fastestmirror=True
-max_parallel_downloads=5
-defaultyes=True
-keepcache=True
-EOF
+# A little better dnf saddly it has to be done manually
+#if [[ -f /etc/dnf/dnf.conf ]]; then
+#
+#	sudo cat << EOF >> /etc/dnf/dnf.conf 
+#fastestmirror=True
+#max_parallel_downloads=5
+#defaultyes=True
+#keepcache=True
+#EOF
 
-fi
+#fi
+
+sudo hostnamectl set-hostname mauwt
 
 # Enable access to the free and the non free repository
 sudo dnf install "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
@@ -24,5 +27,4 @@ sudo dnf install "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-relea
 sudo dnf groupupdate core
 
 # Sethostname to something nicer
-sudo hostnamectl set-hostname mauwt
 
